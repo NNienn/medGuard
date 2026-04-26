@@ -12,8 +12,8 @@ import {
 
 const Candlestick = (props) => {
   const { x, y, width, height, payload } = props
-  const isUp = payload.close >= payload.open
-  const color = isUp ? '#00E676' : '#FF1744'
+  const isOver = payload.close > payload.baseline
+  const color = isOver ? '#FF1744' : '#00E676'
 
   const h = Math.max(payload.high, payload.low)
   const l = Math.min(payload.high, payload.low)
@@ -73,6 +73,7 @@ export default function DeviationChart({ sensor }) {
       range: [low, high],
       volume: Math.abs(zScore),
       isAttack: entry.is_attack === 1 || zScore > 3.0,
+      baseline: dynamicBaseline,
       sma: 0
     }
   })
@@ -127,7 +128,7 @@ export default function DeviationChart({ sensor }) {
           
           <Bar yAxisId="volume" dataKey="volume" isAnimationActive={false}>
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.close >= entry.open ? 'rgba(0, 230, 118, 0.25)' : 'rgba(255, 23, 68, 0.25)'} />
+              <Cell key={`cell-${index}`} fill={entry.close > entry.baseline ? 'rgba(255, 23, 68, 0.25)' : 'rgba(0, 230, 118, 0.25)'} />
             ))}
           </Bar>
 
