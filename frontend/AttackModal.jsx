@@ -39,6 +39,11 @@ export default function AttackModal({ sensor, playbookName, onClose }) {
   const launchedPlaybook = reading?.playbook_name && reading.playbook_name !== 'NONE' ? reading.playbook_name : playbookName
 
   useEffect(() => {
+    const handleKeydown = (e) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', handleKeydown)
+    
     const timers = [
       setTimeout(() => setStep(1), 240),
       setTimeout(() => setStep(2), 900),
@@ -46,7 +51,10 @@ export default function AttackModal({ sensor, playbookName, onClose }) {
       setTimeout(() => setStep(4), 3000),
       setTimeout(() => onClose(), 7600),
     ]
-    return () => timers.forEach(clearTimeout)
+    return () => {
+      window.removeEventListener('keydown', handleKeydown)
+      timers.forEach(clearTimeout)
+    }
   }, [onClose])
 
   if (!sensor) return null

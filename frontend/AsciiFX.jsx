@@ -17,7 +17,7 @@ function normalizeAscii(source) {
   while (lines.length && lines[lines.length - 1].trim() === '') lines.pop()
   const indents = lines.filter((line) => line.trim()).map((line) => line.match(/^ */)[0].length)
   const minIndent = indents.length ? Math.min(...indents) : 0
-  return lines.map((line) => line.slice(minIndent)).join('\n')
+  return lines.map((line) => line.slice(minIndent).trimEnd()).join('\n')
 }
 
 const heartBase = normalizeAscii(String.raw`
