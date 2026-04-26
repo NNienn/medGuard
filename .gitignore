@@ -1,0 +1,12 @@
+node_modules/
+venv/
+__pycache__/
+*.pyc
+logs/
+exports/
+*.db
+*.log
+*.err
+dist/
+.idea/
+.DS_Store
