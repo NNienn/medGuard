@@ -74,7 +74,7 @@ export default function DeviationChart({ sensor }) {
           return (
             <div key={r} style={{ display: 'flex' }}>
               <span style={{ color: 'var(--muted)' }}>{yAxisLabel}</span>
-              {Array.from({ length: paddingCount }).map((_, i) => <span key={\`pad-\${i}\`}> </span>)}
+              {Array.from({ length: paddingCount }).map((_, i) => <span key={`pad-${i}`}> </span>)}
               {row.map((cell, c) => (
                 <span key={c} className={cell.isRed ? 'danger' : 'safe'}>{cell.char}</span>
               ))}
