@@ -54,6 +54,11 @@ export default function DeviationChart({ sensor }) {
     return <div className="panel chart-shell">Awaiting realtime telemetry...</div>
   }
 
+  const nominalPoints = sensor.history.filter(d => Math.abs(d.z_score || 0) < 1.0)
+  const dynamicBaseline = nominalPoints.length > 0 
+    ? nominalPoints.reduce((sum, d) => sum + Number(d.dose_delivered || 0), 0) / nominalPoints.length 
+    : 3.2
+
   let prevDose = Number(sensor.history[0]?.dose_delivered || 0)
   const data = sensor.history.map((entry, index) => {
     const dose = Number(entry.dose_delivered || 0)
